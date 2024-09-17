@@ -1,13 +1,3 @@
-'''
-from Cartas import cartas  
-import random
-
-print("Hola, Bienvenid@ a BlackJack.")
-print("¿Estás list@?, tus primeras cartas son:")
-input ()
-for i in range(2):
-    print(random.choice(cartas))
-'''
 #Importamos librerias
 import random
 
@@ -87,7 +77,32 @@ def main():
     total_jugador = valor_total(cartas_jugador)
     print(f"\nTus cartas: {cartas_jugador} con un total de {total_jugador}.")
     print(f"El total de la casa es: {valor_casa}.")
+    
+    # Determinamos el resultado
+    #Condiciones para ganar:
+    #   El jugador tiene exactamente 21 y la casa tiene menos de 21.
+    #   La casa se pasa de 21 y el jugador no.
+    #   El jugador tiene un total menor o igual a 21 y mayor que el de la casa.
+    #   El jugador y la casa tienen el mismo total, pero el jugador lo ha hecho con menos cartas (máximo 5).
 
+    if (total_jugador == 21 and valor_casa < 21) or \
+       (valor_casa > 21 and total_jugador <= 21) or \
+       (total_jugador <= 21 and valor_casa <= 21 and total_jugador > valor_casa) or \
+       (total_jugador <= 21 and valor_casa <= 21 and total_jugador == valor_casa and len(cartas_jugador) < 5):
+        print("¡Has ganado!")
 
+    #Condiciones para un empate:
+    #   Ambos se pasan de 21.
+    #A  mbos tienen el mismo valor y el jugador ha usado exactamente 5 cartas.
+    elif (total_jugador > 21 and valor_casa > 21) or \
+         (total_jugador <= 21 and valor_casa <= 21 and total_jugador == valor_casa and len(cartas_jugador) == 5):
+        print("Es un empate.")
+    
+    #En cualquier otro caso, el jugador pierde.
+    else:
+        print("¡Has perdido!")
 
-
+#Esta línea ejecuta el juego si el archivo se ejecuta directamente. 
+#Llama a la función main() para iniciar el juego.
+if __name__ == "__main__":
+    main()
